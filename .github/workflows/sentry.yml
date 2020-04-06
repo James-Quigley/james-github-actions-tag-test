@@ -1,0 +1,22 @@
+name: Sentry release version bump
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+      - name: Create new sentry release
+        run: |
+          TAGS=$(git tag -l --points-at HEAD)
+          echo "$TAGS"
+          MATCHING=$(echo $TAGS | grep -e '^v\d*_\d*_\d*_\d*$')
+          echo "$MATCHING"
+          SENTRY_RELEASE=$(git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$' | cut -c 2-)
+          echo "$SENTRY_RELEASE"
