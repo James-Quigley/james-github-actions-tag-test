@@ -14,13 +14,6 @@ jobs:
           fetch-depth: 0
       - name: Create new sentry release
         run: |
-          git fetch --depth=1 origin +refs/tags/*:refs/tags/*
-          git tag -l --points-at HEAD
-          git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$'
-          git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$' | cut -c 2-
-          TAGS=$(git tag -l --points-at HEAD)
-          echo "$TAGS"
-          MATCHING=$(echo $TAGS | grep -e '^v\d*_\d*_\d*_\d*$')
-          echo "$MATCHING"
-          SENTRY_RELEASE=$(git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$' | cut -c 2-)
+          apt-get install -y jq
+          SENTRY_RELEASE=$(head -n 1 backend/__init__.py | cut -d'=' -f2 | jq '"v\(.major)_\(.batch)_\(.commit)_\(.fix)"')
           echo "$SENTRY_RELEASE"
