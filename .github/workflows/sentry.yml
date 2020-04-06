@@ -15,5 +15,5 @@ jobs:
       - name: Create new sentry release
         run: |
           sudo apt-get install -y jq
-          SENTRY_RELEASE=$(head -n 1 backend/__init__.py | cut -d'=' -f2 | jq '"v\(.major)_\(.batch)_\(.commit)_\(.fix)"')
+          SENTRY_RELEASE=$(head -n 1 backend/__init__.py | cut -d'=' -f2 | jq -r '"v\(.major)_\(.batch)_\(.commit)_\(.fix)"')
           echo "$SENTRY_RELEASE"
