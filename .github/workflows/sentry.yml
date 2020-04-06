@@ -15,6 +15,9 @@ jobs:
       - name: Create new sentry release
         run: |
           git fetch --depth=1 origin +refs/tags/*:refs/tags/*
+          git tag -l --points-at HEAD
+          git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$'
+          git tag -l --points-at HEAD | grep -e '^v\d*_\d*_\d*_\d*$' | cut -c 2-
           TAGS=$(git tag -l --points-at HEAD)
           echo "$TAGS"
           MATCHING=$(echo $TAGS | grep -e '^v\d*_\d*_\d*_\d*$')
