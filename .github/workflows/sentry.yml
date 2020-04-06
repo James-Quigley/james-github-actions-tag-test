@@ -17,3 +17,9 @@ jobs:
           sudo apt-get install -y jq
           SENTRY_RELEASE=$(head -n 1 backend/__init__.py | cut -d'=' -f2 | jq -r '"v\(.major)_\(.batch)_\(.commit)_\(.fix)"')
           echo "$SENTRY_RELEASE"
+          if [[ $(echo $SENTRY_RELEASE | cut -d'_' -f3-) == "0_0" ]]
+          then
+            git checkout HEAD~1
+            PREV_VERSION=$(head -n 1 backend/__init__.py | cut -d'=' -f2 | jq -r '"v\(.major)_\(.batch)_\(.commit)_\(.fix)"')
+            echo "$PREV_VERSION"
+          fi

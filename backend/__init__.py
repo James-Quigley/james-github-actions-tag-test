@@ -1,4 +1,4 @@
-__version_info__ = {"major": "1", "batch": "180", "commit": "2", "fix": "0"}
+__version_info__ = {"major": "1", "batch": "181", "commit": "0", "fix": "0"}
 
 
 def stuff():
